@@ -1,2 +1,2 @@
-# HiLo-Reinforcement-Learning
-Learning optimal strategies for the card game HiLo via Reinforcement Learning
+# HiLo via Reinforcement Learning
+Learning optimal strategies for the card game HiLo through Reinforcement Learning approaches.
