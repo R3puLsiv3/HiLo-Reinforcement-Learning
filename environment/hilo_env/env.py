@@ -1,15 +1,17 @@
 import gymnasium as gym
 
+from game import Game
+
 
 class EnvHiLoSinglePlayer(gym.Env):
     def __init__(self):
-        pass
+        self.game = None
 
     def step(self, action):
         pass
 
     def reset(self, seed=None, options=None):
-        pass
+        self.game = Game()
 
     def render(self):
         pass
