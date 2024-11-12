@@ -1,6 +1,16 @@
 
 from random import shuffle
 
+DUMMY_COLOR = -1
+LIGHT_GREEN = 0
+DARK_GREEN = 1
+LIGHT_BLUE = 2
+DARK_BLUE = 3
+RED = 4
+ORANGE = 5
+YELLOW = 6
+PURPLE = 7
+
 
 class Deck:
     def __init__(self, values=range(-1, 12), num_colors=8):
@@ -33,10 +43,10 @@ class Deck:
 
 
 class Card:
-    def __init__(self, value, color):
+    def __init__(self, value, color, shown=False):
         self.value = value
         self.color = color
-        self.shown = False
+        self.shown = shown
 
-    def set_shown(self):
+    def show(self):
         self.shown = True
