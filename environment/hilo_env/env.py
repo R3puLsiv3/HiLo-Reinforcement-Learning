@@ -1,6 +1,9 @@
 import gymnasium as gym
+import numpy as np
 
-from game import Game, TOP_LEFT, TOP_MID, TOP_RIGHT, MID_LEFT, CENTER, MID_RIGHT, LOW_LEFT, LOW_MID, LOW_RIGHT
+from .game import (Game, TOP_LEFT, TOP_MID, TOP_RIGHT, MID_LEFT, CENTER, MID_RIGHT, LOW_LEFT, LOW_MID, LOW_RIGHT,
+                   CARDS_PER_PLAYER)
+from .gameGUI import GameGUI
 
 
 class Actions:
@@ -17,9 +20,19 @@ class Actions:
 
 
 class EnvHiLoSinglePlayer(gym.Env):
-    def __init__(self):
-        self.game = None
+    metadata = {"render_modes": ["human"]}
+
+    def __init__(self, render_mode=None, num_players=2):
+        self.render_mode = render_mode
+        self.game_gui = None
+        self.game = Game(num_players)
         self.card = None
+
+        # The agent can choose to swap the current card with one of the player cards or discard it.
+        self.action_space = gym.spaces.Discrete(CARDS_PER_PLAYER + 1)
+        # The agent observes all the player cards.
+        # TODO: Add more information the observation space
+        self.observation_space = gym.spaces.Discrete(CARDS_PER_PLAYER * self.game.num_players)
 
     def step(self, action):
         match action:
@@ -47,9 +60,15 @@ class EnvHiLoSinglePlayer(gym.Env):
         self.game.end_turn()
         # TODO: Select next card
 
+        if self.render_mode == "human":
+            self.render()
+
     def reset(self, seed=None, options=None):
-        self.game = Game()
         # TODO: Select next card
+
+        if self.render_mode == "human":
+            self.game_gui = GameGUI()
+        return np.asarray([card for player in self.game.player_cards for card in player]), {}
 
     def render(self):
         pass
